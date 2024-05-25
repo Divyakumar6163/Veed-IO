@@ -1,0 +1,50 @@
+/* Sidebar.module.css */
+.sidebar {
+    width: 80px;
+    background-color: #f8f9fa;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.iconContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s, box-shadow 0.3s;
+}
+
+.iconContainer:hover {
+    color: #5a5a5a;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.iconContainer span {
+    font-size: 12px;
+}
+
+.active {
+    color: #007bff;
+}
+
+.active .icon {
+    color: #007bff;
+}
+
+.active:hover {
+    color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.2);
+}
