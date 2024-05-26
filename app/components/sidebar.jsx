@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Box, Anchor, Text } from "@mantine/core";
 import {
   FaSearch,
   FaCog,
@@ -13,83 +13,60 @@ import {
   FaFilm,
   FaFilter,
 } from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
 import styles from "./Sidebar.module.css";
-
-const Sidebar = () => {
+import { GiHamburgerMenu } from "react-icons/gi";
+function Sidebar() {
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.iconContainer}>
+    <Box component="nav" className={styles.nav}>
+      <Anchor href="/" className={styles.anchor}>
         <GiHamburgerMenu className={styles.icon} />
-      </div>
-      <Link href="/search">
-        <div className={styles.iconContainer}>
-          <FaSearch className={styles.icon} />
-          <span>Search</span>
-        </div>
-      </Link>
-      <Link href="/settings">
-        <div className={styles.iconContainer}>
-          <FaCog className={styles.icon} />
-          <span>Settings</span>
-        </div>
-      </Link>
-      <Link href="/media">
-        <div className={styles.iconContainer}>
-          <FaPlus className={styles.icon} />
-          <span>Media</span>
-        </div>
-      </Link>
-      <Link href="/audio">
-        <div className={`${styles.iconContainer} ${styles.active}`}>
-          <FaMusic className={styles.icon} />
-          <span>Audio</span>
-        </div>
-      </Link>
-      <Link href="/subtitles">
-        <div className={styles.iconContainer}>
-          <FaClosedCaptioning className={styles.icon} />
-          <span>Subtitles</span>
-        </div>
-      </Link>
-      <Link href="/text">
-        <div className={styles.iconContainer}>
-          <FaFont className={styles.icon} />
-          <span>Text</span>
-        </div>
-      </Link>
-      <Link href="/elements">
-        <div className={styles.iconContainer}>
-          <FaShapes className={styles.icon} />
-          <span>Elements</span>
-        </div>
-      </Link>
-      <Link href="/record">
-        <div className={styles.iconContainer}>
-          <FaVideo className={styles.icon} />
-          <span>Record</span>
-        </div>
-      </Link>
-      <Link href="/transitions">
-        <div className={styles.iconContainer}>
-          <FaFilm className={styles.icon} />
-          <span>Transitions</span>
-        </div>
-      </Link>
-      <Link href="/filters">
-        <div className={styles.iconContainer}>
-          <FaFilter className={styles.icon} />
-          <span>Filters</span>
-        </div>
-      </Link>
-      <Link href="/help">
-        <div className={styles.iconContainer}>
-          <FaQuestionCircle className={styles.icon} />
-          <span>Help</span>
-        </div>
-      </Link>
-    </div>
+      </Anchor>
+      <Anchor href="/search" className={styles.anchor}>
+        <FaSearch className={styles.icon} />
+        <Text className={styles.text}>Search</Text>
+      </Anchor>
+      <Anchor href="/settings" className={styles.anchor}>
+        <FaCog className={styles.icon} />
+        <Text className={styles.text}>Settings</Text>
+      </Anchor>
+      <Anchor href="/media" className={styles.anchor}>
+        <FaPlus className={styles.icon} />
+        <Text className={styles.text}>Media</Text>
+      </Anchor>
+      <Anchor href="/audio" className={styles.anchor}>
+        <FaMusic className={styles.icon} />
+        <Text className={styles.text}>Audio</Text>
+      </Anchor>
+      <Anchor href="/subtitles" className={styles.anchor}>
+        <FaClosedCaptioning className={styles.icon} />
+        <Text className={styles.text}>Subtitles</Text>
+      </Anchor>
+      <Anchor href="/text" className={styles.anchor}>
+        <FaFont className={styles.icon} />
+        <Text className={styles.text}>Text</Text>
+      </Anchor>
+      <Anchor href="/elements" className={styles.anchor}>
+        <FaShapes className={styles.icon} />
+        <Text className={styles.text}>Elements</Text>
+      </Anchor>
+      <Anchor href="/record" className={styles.anchor}>
+        <FaVideo className={styles.icon} />
+        <Text className={styles.text}>Record</Text>
+      </Anchor>
+      <Anchor href="/transitions" className={styles.anchor}>
+        <FaFilm className={styles.icon} />
+        <Text className={styles.text}>Transitions</Text>
+      </Anchor>
+      <Anchor href="/filters" className={styles.anchor}>
+        <FaFilter className={styles.icon} />
+        <Text className={styles.text}>Filters</Text>
+      </Anchor>
+      <Anchor href="/help" className={styles.anchor}>
+        <FaQuestionCircle className={styles.icon} />
+        <Text className={styles.text}>Help</Text>
+      </Anchor>
+    </Box>
   );
-};
+}
 
 export default Sidebar;

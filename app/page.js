@@ -1,19 +1,19 @@
 "use client";
-import styles from "./page.module.css";
-import TimeLine from "./components/TimeLine";
-import Sidebar from "./components/sidebar";
-export default function Home() {
+import React from "react";
+import { MantineProvider } from "@mantine/core";
+import Sidebar from "./components/Sidebar"; // Ensure the path is correct
+import Timeline from "./components/TimeLine";
+// import Model from "./components/ModalFile";
+import BlackBox from "./components/BlackBox";
+const App = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles.div}>
-        <Sidebar
-          className={styles.sideBar}
-          style={{ position: "absolute", top: "0px", left: " 0px" }}
-        />
-      </div>
-      <footer className={styles.footer}>
-        <TimeLine />
-      </footer>
-    </main>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <Sidebar />
+      {/* <Model /> */}
+      {/* <BlackBox /> */}
+      <Timeline />
+    </MantineProvider>
   );
-}
+};
+
+export default App;

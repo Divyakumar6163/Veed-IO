@@ -3,6 +3,15 @@ import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
 import ReactPlayer from "react-player";
 import {
+  Box,
+  Button,
+  Group,
+  Text,
+  Container,
+  Stack,
+  Image,
+} from "@mantine/core";
+import {
   FaPlay,
   FaPause,
   FaDownload,
@@ -12,7 +21,10 @@ import {
   FaMicrophone,
   FaUpload,
   FaTrash,
+  FaPlus,
 } from "react-icons/fa";
+import MediaDisplay from "./BlackBox";
+import ModalAddFile from "./ModalFile";
 import styles from "./TimeLine.module.css";
 
 const TimelineEditor = () => {
@@ -21,6 +33,7 @@ const TimelineEditor = () => {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const playerRef = useRef(null);
   const timelineRef = useRef(null);
 
@@ -36,24 +49,23 @@ const TimelineEditor = () => {
     setZoom(zoom - 0.1);
   };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    setMediaFiles([
-      ...mediaFiles,
-      { type: "video", src: URL.createObjectURL(file) },
-    ]);
-  };
-
-  const handleAudioUpload = (e) => {
-    const file = e.target.files[0];
-    setAudioTracks([...audioTracks, { src: URL.createObjectURL(file) }]);
+  const handleFileUpload = (files) => {
+    const newFiles = Array.from(files).map((file) => ({
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: URL.createObjectURL(file),
+    }));
+    setMediaFiles((prevMediaFiles) => [...prevMediaFiles, ...newFiles]);
   };
 
   const handleRemoveFile = (index, type) => {
     if (type === "media") {
-      setMediaFiles(mediaFiles.filter((_, i) => i !== index));
+      setMediaFiles((prevMediaFiles) =>
+        prevMediaFiles.filter((_, i) => i !== index)
+      );
     } else if (type === "audio") {
-      setAudioTracks(audioTracks.filter((_, i) => i !== index));
+      setAudioTracks((prevAudioTracks) =>
+        prevAudioTracks.filter((_, i) => i !== index)
+      );
     }
   };
 
@@ -64,133 +76,137 @@ const TimelineEditor = () => {
   }, [currentTime, playing]);
 
   return (
-    <div className={styles.timelineEditor}>
-      <div className={styles.controls}>
-        <button onClick={handlePlayPause} className={styles.controlButton}>
-          {playing ? <FaPause /> : <FaPlay />}
-        </button>
-        <button onClick={handleZoomIn} className={styles.controlButton}>
-          <FaSearchPlus />
-        </button>
-        <button onClick={handleZoomOut} className={styles.controlButton}>
-          <FaSearchMinus />
-        </button>
-        <button className={styles.controlButton}>
-          <FaCut />
-        </button>
-        <button className={styles.controlButton}>
-          <FaDownload />
-        </button>
-        <button className={styles.controlButton}>
-          <FaMicrophone />
-        </button>
-        <label className={styles.uploadLabel}>
-          <FaUpload />
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            className={styles.uploadInput}
-          />
-        </label>
-        <label className={styles.uploadLabel}>
-          <FaUpload />
-          <input
-            type="file"
-            onChange={handleAudioUpload}
-            className={styles.uploadInput}
-          />
-        </label>
-      </div>
-      {mediaFiles.length === 0 && audioTracks.length === 0 && (
-        <div className={styles.emptyTimeline}>
-          <button
-            className={styles.addMediaButton}
-            onClick={() => document.getElementById("fileInputUnique").click()}
+    <Container size="xl">
+      <MediaDisplay mediaFiles={mediaFiles} />
+      <Box className={styles.timelineEditor}>
+        <Group className={styles.controls} spacing="xs">
+          <Button onClick={handlePlayPause} className={styles.controlButton}>
+            {playing ? <FaPause /> : <FaPlay />}
+          </Button>
+          <Button onClick={handleZoomIn} className={styles.controlButton}>
+            <FaSearchPlus />
+          </Button>
+          <Button onClick={handleZoomOut} className={styles.controlButton}>
+            <FaSearchMinus />
+          </Button>
+          <Button className={styles.controlButton}>
+            <FaCut />
+          </Button>
+          <Button className={styles.controlButton}>
+            <FaDownload />
+          </Button>
+          <Button className={styles.controlButton}>
+            <FaMicrophone />
+          </Button>
+          <Button className={styles.controlButton}>
+            <FaUpload />
+          </Button>
+          <Button
+            className={styles.controlButton}
+            onClick={() => setIsModalOpen(true)}
           >
-            Add media to this Project
-          </button>
-          <input
-            id="fileInputUnique"
-            type="file"
-            onChange={handleFileUpload}
-            className={styles.uploadInput}
-            style={{ display: "none" }}
+            <FaPlus />
+          </Button>
+        </Group>
+        {mediaFiles.length === 0 && audioTracks.length === 0 && (
+          <Box className={styles.emptyTimeline}>
+            <Button
+              className={styles.addMediaButton}
+              onClick={() => setIsModalOpen(true)}
+            >
+              Add media to this Project
+            </Button>
+          </Box>
+        )}
+        <Box
+          className={styles.timelineContainer}
+          style={{ transform: `scale(${zoom})` }}
+          ref={timelineRef}
+        >
+          {mediaFiles.map((file, index) => (
+            <Box key={index} className={styles.track}>
+              <Draggable axis="x">
+                <ResizableBox
+                  width={200}
+                  height={40}
+                  minConstraints={[100, 40]}
+                  maxConstraints={[400, 40]}
+                >
+                  <Box className={styles.trackItem}>
+                    {file.type === "video" ? (
+                      <video
+                        src={file.src}
+                        controls
+                        width="100%"
+                        height="100%"
+                      />
+                    ) : (
+                      <Image
+                        src={file.src}
+                        alt="Media"
+                        width="100%"
+                        height="100%"
+                      />
+                    )}
+                    <Button
+                      className={styles.removeButton}
+                      onClick={() => handleRemoveFile(index, "media")}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </Box>
+                </ResizableBox>
+              </Draggable>
+            </Box>
+          ))}
+          {audioTracks.map((track, index) => (
+            <Box key={index} className={styles.track}>
+              <Draggable axis="x">
+                <ResizableBox
+                  width={200}
+                  height={40}
+                  minConstraints={[100, 40]}
+                  maxConstraints={[400, 40]}
+                >
+                  <Box className={styles.trackItem}>
+                    <Text>Audio Track</Text>
+                    <Button
+                      className={styles.removeButton}
+                      onClick={() => handleRemoveFile(index, "audio")}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </Box>
+                </ResizableBox>
+              </Draggable>
+            </Box>
+          ))}
+          <Box
+            className={styles.playingLine}
+            style={{
+              left: `${
+                (currentTime / (playerRef.current?.getDuration() || 1)) * 100
+              }%`,
+            }}
           />
-        </div>
-      )}
-      <div
-        className={styles.timelineContainer}
-        style={{ transform: `scale(${zoom})` }}
-        ref={timelineRef}
-      >
-        {mediaFiles.map((file, index) => (
-          <div key={index} className={styles.track}>
-            <Draggable axis="x">
-              <ResizableBox
-                width={200}
-                height={40}
-                minConstraints={[100, 40]}
-                maxConstraints={[400, 40]}
-              >
-                <div
-                  className={styles.trackItem}
-                  style={{ backgroundColor: "red" }}
-                >
-                  <span>{file.type === "video" ? "Video" : "Image"} Track</span>
-                  <button
-                    className={styles.removeButton}
-                    onClick={() => handleRemoveFile(index, "media")}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </ResizableBox>
-            </Draggable>
-          </div>
-        ))}
-        {audioTracks.map((track, index) => (
-          <div key={index} className={styles.track}>
-            <Draggable axis="x">
-              <ResizableBox
-                width={200}
-                height={40}
-                minConstraints={[100, 40]}
-                maxConstraints={[400, 40]}
-              >
-                <div
-                  className={styles.trackItem}
-                  style={{ backgroundColor: "blue" }}
-                >
-                  <span>Audio Track</span>
-                  <button
-                    className={styles.removeButton}
-                    onClick={() => handleRemoveFile(index, "audio")}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </ResizableBox>
-            </Draggable>
-          </div>
-        ))}
-        <div
-          className={styles.playingLine}
-          style={{
-            left: `${(currentTime / playerRef.current?.getDuration()) * 100}%`,
-          }}
+        </Box>
+        {mediaFiles.length > 0 && (
+          <ReactPlayer
+            ref={playerRef}
+            url={mediaFiles[0].src}
+            playing={playing}
+            onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
+            width="0"
+            height="0"
+          />
+        )}
+        <ModalAddFile
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onFileUpload={handleFileUpload}
         />
-      </div>
-      {mediaFiles.length > 0 && (
-        <ReactPlayer
-          ref={playerRef}
-          url={mediaFiles[0].src}
-          playing={playing}
-          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
-          width="0"
-          height="0"
-        />
-      )}
-    </div>
+      </Box>
+    </Container>
   );
 };
 
