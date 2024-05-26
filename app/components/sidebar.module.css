@@ -1,5 +1,8 @@
-/* Sidebar.module.css */
 .sidebar {
+    position: fixed;
+    /* Fixes the sidebar to the left side of the viewport */
+    top: 0;
+    left: 0;
     width: 80px;
     background-color: #f8f9fa;
     height: 100vh;
@@ -8,6 +11,8 @@
     align-items: center;
     padding-top: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    /* Enables vertical scrolling for overflow content */
 }
 
 .iconContainer {

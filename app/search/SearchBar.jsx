@@ -1,6 +1,6 @@
-"use-client";
+"use client";
 import { useState } from "react";
-import SearchSuggestions from "./searchSuggestions";
+import SearchSuggestions from "./SearchSuggestions";
 import styles from "./SearchBar.module.css";
 
 const SearchBar = () => {

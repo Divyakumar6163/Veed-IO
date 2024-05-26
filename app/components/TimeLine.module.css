@@ -1,0 +1,113 @@
+.timelineEditor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #f9f9f9;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.controlButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.controlButton:hover {
+    color: #000;
+}
+
+.uploadLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.uploadInput {
+    display: none;
+}
+
+.timelineContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background: #fff;
+    overflow-x: scroll;
+    position: relative;
+}
+
+.emptyTimeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 200px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.addMediaButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.addMediaButton:hover {
+    background: #0056b3;
+}
+
+.track {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.trackItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.removeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.removeButton:hover {
+    color: #f00;
+}
+
+.playingLine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: red;
+    pointer-events: none;
+}
