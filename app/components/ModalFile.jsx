@@ -1,4 +1,6 @@
 import React from "react";
+import { Box } from "@mantine/core";
+
 import img1 from ".././public/img1.png";
 import img2 from ".././public/img2.png";
 import {
@@ -37,16 +39,16 @@ const ModalAddFile = ({ isOpen, onClose, onFileUpload }) => {
         <FileButton onChange={handleFileChange} multiple>
           {(props) => (
             <Button {...props} fullWidth>
-              <div
+              <Box
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <span style={{ marginRight: 8 }}>⬆</span>
-                <span>Upload files</span>
-              </div>
+                <Box style={{ marginRight: 8 }}>⬆</Box>
+                <Box>Upload files</Box>
+              </Box>
             </Button>
           )}
         </FileButton>

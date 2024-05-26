@@ -45,7 +45,7 @@ function AddMedia({ onFileUpload }) {
           Text To Speech
         </Button>
         <Button className={styles.button} leftIcon={<MdGraphicEq />}>
-          Voice Clone <span className={styles.new}>NEW</span>
+          Voice Clone <Box className={styles.new}>NEW</Box>
         </Button>
       </Group>
       <Group className={styles.avatarsHeader}>
