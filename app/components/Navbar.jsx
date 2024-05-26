@@ -13,7 +13,7 @@ import {
   FaFilm,
   FaFilter,
 } from "react-icons/fa";
-import styles from "./Sidebar.module.css";
+import styles from "./Navbar.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 function Sidebar() {
   return (
