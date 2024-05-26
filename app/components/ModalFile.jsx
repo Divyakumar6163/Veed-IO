@@ -1,4 +1,6 @@
 import React from "react";
+import img1 from ".././public/img1.png";
+import img2 from ".././public/img2.png";
 import {
   Modal,
   Button,
@@ -51,19 +53,11 @@ const ModalAddFile = ({ isOpen, onClose, onFileUpload }) => {
         <Text align="center">Choose files or drag them here</Text>
         <Group position="center">
           <Stack align="center">
-            <Image
-              src="start_by_recording_image_url"
-              alt="Start by recording"
-              height={80}
-            />
+            <Image src={img2} alt="Start by recording" height={80} />
             <Text>Start by recording</Text>
           </Stack>
           <Stack align="center">
-            <Image
-              src="start_with_ai_image_url"
-              alt="Start with AI"
-              height={80}
-            />
+            <Image src={img1} alt="Start with AI" height={80} />
             <Text>Start with AI</Text>
           </Stack>
         </Group>

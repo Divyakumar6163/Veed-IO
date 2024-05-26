@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
 import ReactPlayer from "react-player";
+import ButtonType from "./ButtonType";
 import {
   Box,
   Button,
@@ -26,7 +27,7 @@ import {
 import MediaDisplay from "./BlackBox";
 import ModalAddFile from "./ModalFile";
 import styles from "./TimeLine.module.css";
-
+import Audio from "./audio";
 const TimelineEditor = () => {
   const [playing, setPlaying] = useState(false);
   const [zoom, setZoom] = useState(1);
@@ -77,7 +78,11 @@ const TimelineEditor = () => {
 
   return (
     <Container size="xl">
+      <Audio onFileUpload={handleFileUpload} />
+      <Box className={styles.black}></Box>
       <MediaDisplay mediaFiles={mediaFiles} />
+      <ButtonType fileType={mediaFiles.length > 0 ? "image" : null} />
+
       <Box className={styles.timelineEditor}>
         <Group className={styles.controls} spacing="xs">
           <Button onClick={handlePlayPause} className={styles.controlButton}>

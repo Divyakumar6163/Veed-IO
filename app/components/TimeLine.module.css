@@ -196,3 +196,14 @@
     background: #0056b3;
     transform: scale(1.05);
 }
+
+.black {
+    color: #000;
+    background-color: #000;
+    border-color: #000;
+    position: fixed;
+    top: 8vh;
+    right: 10vw;
+    min-width: 45vw;
+    min-height: 55vh;
+}

@@ -5,6 +5,16 @@ import styles from "./BlackBox.module.css";
 const MediaDisplay = ({ mediaFiles }) => {
   return (
     <Box className={styles.container}>
+      {mediaFiles.length === 0 && (
+        <Box
+          className={styles.container}
+          style={{
+            backgroundColor: "black",
+            color: "black",
+            background: "black",
+          }}
+        />
+      )}
       {mediaFiles.length > 0 && (
         <Box className={styles.grid}>
           {mediaFiles.map((file, index) => (
